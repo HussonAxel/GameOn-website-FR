@@ -533,3 +533,22 @@ footer {
   }
 }
 
+
+.label-message {
+  display: none;
+}
+
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.success {
+  border: 2px solid #279e7a;
+}
+
+.has-error {
+  border: 2px solid #e54858;
+}
