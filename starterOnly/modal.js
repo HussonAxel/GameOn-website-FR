@@ -20,85 +20,94 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close modal form
+// ISSUE #1 fermer la modale
 function closeModal() {
   modalbg.style.display = "none";
 }
-
 document.addEventListener("click", function(event) {
   if (event.target == modalbg || event.target.classList.contains("close")) {
     closeModal();
   }
 });
 
+
+
+
+// ISSUE #2 IMPLÉMENTER ENTRÉES DU FORMULAIRE
 // form Validation
-const validateForm = function () {
+// DOM Elements :
+// create a form validation function
+function validateForm() {
+  // DOM ELEMENTS :
   const form = document.getElementById("form");
-  const nameErrorMessage = "Veuillez entrer 2 caractères ou plus."
-  const emailErrorMessage = "Veuillez entrer une adresse email valide."
-  const quantityErrorMessage = "Veuillez entrer un nombre entier positif."
 
-  const validateInput = function (inputElement, regex, errorMessage, fieldName) {
-    const inputValue = inputElement.value.trim();
-    const isValid = regex.test(inputValue);
-    const errorMessageElement = inputElement.nextElementSibling;
-    if (isValid) {
-      errorMessageElement.innerHTML = "";
-      inputElement.classList.add("success");
-      errorMessageElement.classList.remove("error-message");
-      inputElement.classList.remove("has-error");
-      return true;
-    } else {
-      errorMessageElement.innerHTML = `${errorMessage}`;
-      errorMessageElement.classList.add("error-message");
-      inputElement.classList.remove("success");
-      inputElement.classList.add("has-error");
-      return false;
-    }
-  };
 
-  form.first.addEventListener("change", function () {
-    validateInput(this, /^[a-zA-Z\- ]{2,}$/, nameErrorMessage, "Prénom");
+  // ERRORS MESSAGES VARIABLES
+  const nameErrorMessage = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+  const emailErrorMessage = "Veuillez entrer une adresse e-mail valide.";
+  const birthdateErrorMessage = "Vous devez entrer votre date de naissance.";
+  const quantityErrorMessage = "Veuillez entrer une valeur numérique";
+  const locationErrorMessage = "Vous devez choisir une option.";
+  const cguErrorMessage = "Vous devez vérifier que vous acceptez les termes et conditions.";
+
+  // REGEX
+  const nameRegex = /^[a-zA-Z- ]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const quantityRegex = /^([1-9]|[1-9][0-9])$/;
+
+// FORM VALIDATION
+const inputs = form.querySelectorAll('input');
+
+for (let i = 0; i < inputs.length; i++) {
+  let input = inputs[i];
+  let regex, errorMessage;
+  switch (input.name) {
+    case 'first':
+    case 'last':
+      regex = nameRegex;
+      errorMessage = nameErrorMessage;
+      break;
+    case 'email':
+      regex = emailRegex;
+      errorMessage = emailErrorMessage;
+      break;
+    case 'quantity':
+      regex = quantityRegex;
+      errorMessage = quantityErrorMessage;
+      break;
+    default:
+      continue;
+  }
+  input.addEventListener('change', function() {
+    validateInput(this, regex, errorMessage);
   });
+}
 
-  form.last.addEventListener("change", function () {
-    validateInput(this, /^[a-zA-Z\- ]{2,}$/, nameErrorMessage, "Nom");
-  });
-
-  form.email.addEventListener("change", function () {
-    validateInput(this, /^[^@]+@[^@]+\.[^@]+$/, emailErrorMessage, "Email");
-  });
-
-  form.quantity.addEventListener("change", function () {
-    validateInput(this, /^[1-9]\d*$/, quantityErrorMessage, "Quantité");
-  });
-
-  form.addEventListener("submit", function (event) {
-    const locationInputs = document.querySelectorAll('input[name="location"]');
-    const termsCheckbox = document.getElementById("checkbox1");
-
-    let locationSelected = false;
-    for (let i = 0; i < locationInputs.length; i++) {
-      if (locationInputs[i].checked) {
-        locationSelected = true;
-        break;
-      }
-    }
-
-    if (!locationSelected) {
-      event.preventDefault();
-      const errorMessageElement = document.querySelector('.city-checkbox-error');
-      errorMessageElement.innerHTML = "Vous devez choisir une option.";
-      errorMessageElement.classList.add("error-message");
-    }
-
-    if (!termsCheckbox.checked) {
-      event.preventDefault();
-      const errorMessageElement = document.querySelector('.cgu-checkbox-error');
-      errorMessageElement.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";
-      errorMessageElement.classList.add("error-message");
-    }
-  });
+const validateInput = function (input, regex, errorMessage) {
+  let isValid = regex.test(input.value);
+  if (isValid) {
+    input.classList.remove('error-block');
+    input.classList.add('success-block');
+    let small = input.nextElementSibling;
+    small.innerText = '';
+    small.classList.remove('error-message')
+  } else {
+    input.classList.remove('success-block');
+    input.classList.add('error-block');
+    let small = input.nextElementSibling;
+    small.innerText = errorMessage;
+    small.classList.add('error-message')
+  }
 };
 
+  // prevent form submission
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+  });
+
+
+
+}
+
 validateForm();
+
