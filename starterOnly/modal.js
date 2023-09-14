@@ -34,9 +34,6 @@ document.addEventListener("click", function(event) {
 
 
 // ISSUE #2 IMPLÉMENTER ENTRÉES DU FORMULAIRE
-// form Validation
-// DOM Elements :
-// create a form validation function
 function validateForm() {
   // DOM ELEMENTS :
   const form = document.getElementById("form");
@@ -99,15 +96,9 @@ const validateInput = function (input, regex, errorMessage) {
     small.classList.add('error-message')
   }
 };
-
   // prevent form submission
   form.addEventListener("submit", function (event) {
     event.preventDefault();
   });
-
-
-
 }
-
-validateForm();
 
