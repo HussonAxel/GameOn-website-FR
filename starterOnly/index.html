@@ -102,7 +102,8 @@
                   id="birthdate"
                   name="birthdate"
                   required
-                  min="1900-01-01" max="2004-12-31"
+                  min="1900-01-01"
+                  max="2004-12-31"
                 />
                 <small></small>
                 <br />
@@ -197,14 +198,13 @@
               <small></small>
 
               <div class="formData" id="formConditions">
-                <input class="checkbox-input" type="checkbox" id="checkbox1" />
-                <label class="checkbox2-label" for="checkbox1">
+                <input class="checkbox-input" type="checkbox" id="cguCheckbox" />
+                <label class="checkbox2-label" for="cguCheckbox">
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
-
+                <small id="cguError"></small>
                 <br />
-                <small></small>
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
@@ -213,9 +213,12 @@
                 <br />
               </div>
               <input
+                id="submit"
                 class="btn-submit button"
                 type="submit"
                 value="C'est parti"
+                id="submit"
+                name="submit"
               />
             </form>
           </div>
