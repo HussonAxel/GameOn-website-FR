@@ -27,7 +27,6 @@ document.addEventListener("click", function (event) {
   }
 });
 
-
 const modalSubmitBtn = document.querySelector(".btn-submit");
 const modalBody = document.querySelector(".modal-body");
 // validate form function
@@ -53,7 +52,7 @@ function validateForm() {
   const nameRegex = /^[a-zA-Z- ]{2,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const quantityRegex = /^([1-9]|[1-9][0-9])$/;
-
+  const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
   // FORM VALIDATION WHILE WRITING
   const validateInput = function (input, regex, errorMessage) {
     let isValid = regex.test(input.value);
@@ -88,17 +87,18 @@ function validateForm() {
         case "last":
           regex = nameRegex;
           errorMessage = nameErrorMessage;
-
           break;
         case "email":
           regex = emailRegex;
           errorMessage = emailErrorMessage;
-
+          break;
+        case "birthdate":
+          regex = birthdateRegex;
+          errorMessage = birthdateErrorMessage;
           break;
         case "quantity":
           regex = quantityRegex;
           errorMessage = quantityErrorMessage;
-
           break;
         default:
           return;
@@ -136,8 +136,7 @@ function validateForm() {
     }
 
     if (isFormValid) {
-      modalBody.innerHTML="<h1> FINI </h1>";
-      console.log("Formulaire soumis avec succès !");
+      modalBody.innerHTML = "<h2> Votre inscription est confirmé </h2>";
     }
   });
 }
