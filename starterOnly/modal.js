@@ -52,8 +52,8 @@ function validateForm() {
   const nameRegex = /^[a-zA-Z- ]{2,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const quantityRegex = /^([1-9]|[1-9][0-9])$/;
-  const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  // FORM VALIDATION WHILE WRITING
+  const birthdateRegex =
+    /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/; // FORM VALIDATION WHILE WRITING
   const validateInput = function (input, regex, errorMessage) {
     let isValid = regex.test(input.value);
     if (isValid) {
@@ -136,7 +136,7 @@ function validateForm() {
     }
 
     if (isFormValid) {
-      modalBody.innerHTML = "<h2> Votre inscription est confirmé </h2>";
+      modalBody.innerHTML = "<h2> Votre inscription est confirmée </h2>";
     }
   });
 }
