@@ -22,13 +22,16 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 document.addEventListener("click", function (event) {
-  if (event.target == modalbg || event.target.classList.contains("close")) {
+  if (event.target == modalbg || event.target.classList.contains("close") || event.target.classList.contains("exit")) {
     closeModal();
   }
 });
 
+
 const modalSubmitBtn = document.querySelector(".btn-submit");
 const modalBody = document.querySelector(".modal-body");
+
+
 // validate form function
 function validateForm() {
   // DOM ELEMENTS :
@@ -36,24 +39,28 @@ function validateForm() {
   const cguCheckbox = form.cguCheckbox;
   const cguErrorElement = document.getElementById("cguError");
   const formVille = document.getElementById("formVille");
-  const errorElement = formVille.nextElementSibling;
+  const villeErrorElement = formVille.nextElementSibling;
+  const locationCheckboxes = form.querySelectorAll(
+        'input[name="location"]'
+      );
+
+
 
   // ERRORS MESSAGES VARIABLES
-  const nameErrorMessage =
-    "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+  const nameErrorMessage = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
   const emailErrorMessage = "Veuillez entrer une adresse e-mail valide.";
   const birthdateErrorMessage = "Vous devez entrer votre date de naissance.";
   const quantityErrorMessage = "Veuillez entrer une valeur numérique";
   const locationErrorMessage = "Vous devez choisir une option.";
-  const cguErrorMessage =
-    "Vous devez vérifier que vous acceptez les termes et conditions.";
+  const cguErrorMessage = "Vous devez vérifier que vous acceptez les termes et conditions.";
 
   // REGEX
   const nameRegex = /^[a-zA-Z- ]{2,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const quantityRegex = /^([1-9]|[1-9][0-9])$/;
-  const birthdateRegex =
-    /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/; // FORM VALIDATION WHILE WRITING
+  const birthdateRegex = /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/; 
+
+  // VALIDATION FUNCTION
   const validateInput = function (input, regex, errorMessage) {
     let isValid = regex.test(input.value);
     if (isValid) {
@@ -109,7 +116,6 @@ function validateForm() {
     });
 
     // Validation des checkboxes
-    const locationCheckboxes = form.querySelectorAll('input[name="location"]');
     let locationChecked = false;
     locationCheckboxes.forEach((checkbox) => {
       if (checkbox.checked) {
@@ -117,11 +123,11 @@ function validateForm() {
       }
     });
     if (locationChecked) {
-      errorElement.innerText = "";
-      errorElement.classList.remove("error-message");
+      villeErrorElement.innerText = "";
+      villeErrorElement.classList.remove("error-message");
     } else {
-      errorElement.innerText = locationErrorMessage;
-      errorElement.classList.add("error-message");
+      villeErrorElement.innerText = locationErrorMessage;
+      villeErrorElement.classList.add("error-message");
       isFormValid = false;
     }
 
@@ -136,7 +142,13 @@ function validateForm() {
     }
 
     if (isFormValid) {
-      modalBody.innerHTML = "<h2> Votre inscription est confirmée </h2>";
+    modalBody.style.textAlign = "center";
+    modalBody.style.padding = "2rem";
+    modalBody.style.fontSize = "1.5rem";
+    modalBody.classList.add("confirmed-bg");
+    modalBody.innerHTML =
+      "<p class='confirmation'>Merci pour votre inscription </p> \
+    <input class='btn-submit exit' type='submit' value='Fermer' id='closeBtn' /> ";
     }
   });
 }
